@@ -1,7 +1,8 @@
 image: bitbucketpipelines/scala-sbt:scala-2.12
 
 pipelines:
-  default:
+  branches:
+    development:
     - step:
         script:
           - sbt test

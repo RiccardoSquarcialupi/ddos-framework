@@ -5,15 +5,7 @@ name := "ddos-framework"
 
 scalaVersion := "3.2.1"
 
-lazy val app = (project in file("app"))
-  .settings(
-      //assembly / mainClass := Some("it.unibo.pps.launcher.Launcher")
-  )
-
-lazy val utils = (project in file("utils"))
-  .settings(
-      assembly / assemblyJarName := s"ddos-framework-$version.jar"
-  )
+enablePlugins(AkkaGrpcPlugin)
 
 ThisBuild / assemblyMergeStrategy := {
     case PathList("META-INF", _*) => MergeStrategy.discard
@@ -21,20 +13,19 @@ ThisBuild / assemblyMergeStrategy := {
 }
 val AkkaVersion = "2.7.0"
 
-//Add Monix dependencies
-libraryDependencies += "io.monix" %% "monix" % "3.4.1"
-
-//Add JFreeChart dependencies
-libraryDependencies += "org.jfree" % "jfreechart" % "1.5.3"
+resolvers += "jitpack" at "https://jitpack.io"
 
 //Add ScalaTest dependencies
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.14" % Test
 
-//Add Prolog dependencies
-libraryDependencies += "it.unibo.alice.tuprolog" % "2p-core" % "4.1.1"
-libraryDependencies += "it.unibo.alice.tuprolog" % "2p-ui" % "4.1.1"
-
 libraryDependencies ++= Seq(
-    "com.typesafe.akka" %% "akka-actor" % AkkaVersion,
-    "com.typesafe.akka" %% "akka-testkit" % AkkaVersion % Test
+    "com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion,
+    "com.typesafe.akka" %% "akka-actor-testkit-typed" % AkkaVersion % Test,
+    "com.typesafe.akka" %% "akka-cluster-typed" % AkkaVersion,
+    "com.typesafe.akka" %% "akka-serialization-jackson" % AkkaVersion
 )
+
+libraryDependencies += "com.github.Filocava99" % "TuSoW" % "0.8.3"
+
+// https://mvnrepository.com/artifact/org.scalafx/scalafx
+libraryDependencies += "org.scalafx" %% "scalafx" % "19.0.0-R30"
